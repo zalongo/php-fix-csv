@@ -9,6 +9,9 @@ class Csv
   private $taxes = 0;
   private $total = 0;
 
+  private $rates_col = 3;
+  private $taxes_col = 4;
+
   public function printTable(): void
   {
     include('../app/views/table.php');
@@ -21,10 +24,10 @@ class Csv
 
   public function computeTotals(): void
   {
-    foreach($this->csv as $row) {
-      $this->taxes += (int) $row[3];
-      $this->rates += (int) $row[4];
-      $this->total += (int) $row[3] + (int) $row[4];
+    foreach ($this->csv as $row) {
+      $this->taxes += (int) $row[$this->taxes_col];
+      $this->rates += (int) $row[$this->rates_col];
+      $this->total += (int) $row[$this->taxes_col] + (int) $row[$this->rates_col];
     }
 
     array_push($this->csv, ['', '', 'Subtotal', $this->rates, '']);
